@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bookpurchase
+    username: root
+    password: td725430
+  #jpa的正向工程
+  #程序运行时创建表（如果有表，不会创建表）
+  jpa:
+    hibernate:
+      ddl-auto: update
+    #显示sql
+    show-sql: true
+    #设置Hibernate SQL方言
+    database-platform: org.hibernate.dialect.MySQLDialect
+  #配置文件的真实位置
+  messages:
+    basename: i18n.login
+  #关闭模板引擎的缓存
+  thymeleaf:
+    cache: false
+  mvc:
+    format:
+      date: yyyy-MM-dd
+  mail:
+    #smtp服务主机  qq邮箱则为smtp.qq.com
+    host: smtp.qq.com
+    #服务协议
+    protocol: smtp
+    # 编码集
+    default-encoding: utf-8
+    #发送邮件的账户
+    username: 923004696@qq.com
+    #相对应的授权码
+    password: uqzrmhcklyfsbfgi
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  redis:
+    #地址
+    host: 59.110.65.106
+    #端口
+    port: 6379
+  rabbitmq:
+    host: 59.110.65.106    #IP地址
+    port: 5672            #端口号
+    username: guest
+    password: guest
