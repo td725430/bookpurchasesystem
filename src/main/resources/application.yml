@@ -43,11 +43,11 @@ spring:
             required: true
   redis:
     #地址
-    host: 59.110.65.106
+    host: 66.66.66.66
     #端口
     port: 6379
   rabbitmq:
-    host: 59.110.65.106    #IP地址
+    host: 66.66.66.66    #IP地址
     port: 5672            #端口号
     username: guest
     password: guest
