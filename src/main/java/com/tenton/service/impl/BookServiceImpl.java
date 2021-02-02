@@ -37,7 +37,10 @@ public class BookServiceImpl implements BookService {
     public void insertBook(Book book) {
         bookDao.save(book);
     }
-
+    /**
+     * 批量插入图书
+     * @param books
+     */
     @Override
     public void addBook(List<Book> books) {
         bookDao.saveAll(books);

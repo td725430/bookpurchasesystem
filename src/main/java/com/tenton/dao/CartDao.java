@@ -23,6 +23,12 @@ public interface CartDao extends JpaRepository<Cart,Integer>, JpaSpecificationEx
     @Modifying
     @Query(value = "delete from Cart where userId = ?1")
     void deleteAllByUserId(Integer userId);
-    @Query(value = "select id,userId,bookId,name,price,num,author,stock,createTime,updateTime from Cart where userId = ?1")
+
+    /**
+     * 根据用户Id查询购物车对应商品信息
+     * @param userId
+     * @return
+     */
+    @Query(value = "select * from Cart where user_id = ?1",nativeQuery = true)
     List<Cart> findAllByUserId(Integer userId);
 }

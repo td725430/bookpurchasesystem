@@ -17,7 +17,6 @@ import java.util.Random;
  * @Author: Tenton
  * @Description: 用户
  */
-@Controller
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;

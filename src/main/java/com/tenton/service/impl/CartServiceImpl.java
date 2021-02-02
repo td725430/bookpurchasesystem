@@ -25,7 +25,6 @@ import java.util.List;
  * @Description:
  */
 @Transactional
-@Controller
 public class CartServiceImpl implements CartService {
     @Autowired
     CartDao cartDao;
