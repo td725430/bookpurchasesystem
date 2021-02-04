@@ -61,4 +61,19 @@ public interface CartService {
      * @return
      */
     Page<Cart> pageQuery(String name, Integer pageNum);
+
+    /**
+     * 发送延迟队列
+     * @param userId
+     * @param bookId
+     */
+    void sendDelayQueue(Integer userId, int bookId);
+
+    /**
+     * 根据用户Id和图书Id查询购物车
+     * @param userId
+     * @param bookId
+     * @return
+     */
+    Cart getCartByUserAndBookId(Integer userId, int bookId);
 }

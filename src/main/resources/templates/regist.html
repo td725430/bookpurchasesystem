@@ -35,6 +35,9 @@
             color:red;
             size:2px;
         }
+        .right-color{
+            color:green;
+        }
         .text{
             width:200px;
             height:18px;
@@ -56,8 +59,40 @@
         .button:hover {
             background: #FF6677;
         }
+
+        .select{
+            width:200px;
+            height:24px;
+        }
         #passStrength{
             height:6px;width:120px;border:1px solid #ccc;padding:2px;
+        }
+        .strengthLv1{
+            background:red;height:6px;width:40px;
+        }
+        .strengthLv2{
+            background:orange;height:6px;width:80px;
+        }
+        .strengthLv3{
+            background:green;height:6px;width:120px;
+        }
+        .code {
+            font-family:Arial;
+            font-style:italic;
+            color:white;
+            font-size:30px;
+            border:0;
+            padding:2px 3px;
+            letter-spacing:3px;
+            font-weight:bolder;
+            float:left;
+            cursor:pointer;
+            width:150px;
+            height:50px;
+            line-height:60px;
+            text-align:center;
+            vertical-align:middle;
+            background-color:#FF6699;
         }
         span {
             text-decoration:none;
@@ -74,7 +109,7 @@
             height:6px;width:120px;border:1px solid #ccc;padding:2px;
         }
     </style>
-
+    <script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"/>
     <script type="text/javascript">
         /*添加事件监听兼容问题(为了机房中的IE浏览器做准备)处理*/
         EventListener={
@@ -93,31 +128,33 @@
             var inputName=document.getElementsByTagName("input");
             var btnName=document.getElementsByClassName("button");
             var tdLeft=document.getElementsByClassName("td-left");
-            var ID=selector("#ID");
+            var Na=selector("#Na");
             //第一次输入的密码
             var password=selector("#password");
             //第二次输入的密码
-            var rpassword=selector("#Rpassword");
+            var Rpassword=selector("#Rpassword");
+            var Ema=selector("#Ema");
+            var Form=selector("#form");
 
             /*ID验证*/
             EventListener.addEvent(inputName[0],"blur",function(){
                 if(this.value==""){
-                    ID.innerHTML="用户名不能为空！";
+                    Na.innerHTML="用户名不能为空！";
                 }else if(inputName[0].value.length<3||inputName[0].value.length>18 ){
-                    ID.innerHTML="用户名限制于3-18位！";
+                    Na.innerHTML="用户名限制于3-18位！";
                 }else{
-                    ID.innerHTML="";
+                    Na.innerHTML="";
                 }
             })
             EventListener.addEvent(inputName[0],"focus",function(){
-                password.innerHTML="";
+                Na.innerHTML="";
             })
             /*密码格式验证*/
             EventListener.addEvent(inputName[1],"blur",function(){
                 if(this.value==""){
                     password.innerHTML="密码不能为空！";
                 }else if(inputName[1].value.length<6){
-                    password.innerHTML="密码需要大于6位！";
+                    password.innerHTML="密码至少6位！";
                 }else{
                     password.innerHTML="";
                 }
@@ -129,15 +166,38 @@
             EventListener.addEvent(inputName[2],"blur",function(){
                 var flag=makeSuremima(inputName[1].value,inputName[2].value);
                 if(flag==0){
-                    rpassword.innerHTML="密码输入不能为空！";
+                    Rpassword.innerHTML="密码输入不能为空！";
                 }else if(flag==1){
-                    rpassword.innerHTML="";
+                    Rpassword.innerHTML="";
                 }else{
-                    rpassword.innerHTML="两次密码输入不一致";
+                    Rpassword.innerHTML="两次密码输入不一致";
                 }
             })
             EventListener.addEvent(inputName[2],"focus",function(){
-                rpassword.innerHTML="";
+                Rpassword.innerHTML="";
+            })
+            /*邮箱格式验证*/
+            EventListener.addEvent(inputName[4],"blur",function(){
+                if(this.value==""){
+                    Ema.innerHTML="请填写您的邮箱！";
+                }else if(isEmail(inputName[4])==false){
+                    Ema.innerHTML="邮箱格式错误！";
+                }else{
+                    Ema.innerHTML="";
+                }
+            })
+            EventListener.addEvent(inputName[4],"focus",function(){
+                Ema.innerHTML="";
+            })
+            /*提交按钮点击事件*/
+            EventListener.addEvent(btnName[0],"click",function(){
+                if(name.innerHTML!=""||inputName[0].value==""||pass.innerHTML!=""||inputName[1].value==""||rpass.innerHTML!=""||inputName[2].value==""||email.innerHTML!=""||inputName[4].value==""){
+                    window.alert("请补全信息！");
+                }
+                else{
+                    window.alert("注册成功！");
+                    Form.submit();
+                }
             })
 
             /*重置按钮之后不再显示提示内容*/
@@ -187,41 +247,44 @@
                     return document.getElementsByTagName(what);
                 }
             }
-            /*重置时将所有warning消除,不再显示*/
-            function noShow(arr){
-                for(var i=0;i<arr.length-1;i++){
-                    arr[i].innerHTML="";
+            /*邮箱格式验证*/
+            function isEmail(obj)
+            {
+                var Email=/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                var Eflag=Email.test(obj.value);
+
+                if(Eflag==true)
+                {
+                    return true;
+                }else
+                {
+                    return false;
                 }
             }
-
-        }
-        function senfEmail(){
-            var email = document.getElementById("email").value;
-            window.location.href='http://localhost:8080/user/sendEmail/{email}';
         }
     </script>
 </head>
 <body>
-<form th:action="@{/user/regist}" method="post">
+<form th:action="@{/user/regist}" method="post" id="form">
     <table align="center">
         <tr>
             <th colspan="3">欢迎注册</th>
         </tr>
         <tr>
-            <td colspan="3" height="20px"></td>
+            <td colspan="3" height="20px">
+                <p style="color: red;text-align: center" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+            </td>
         </tr>
         <tr>
             <td class="td-left" >用户名</td>
             <td class="content">
-                <input name="name" type="text" class="text"/>
+                <input name="name" type="text" id="name" class="text"/>
             </td>
-            <td id="ID" class="warning"></td>
+            <td id="Na" class="warning"></td>
         </tr>
         <tr>
             <td class="td-left">输入密码</td>
-            <td class="content">
-                <input type="password" name="password" id="pass" maxlength="8"/>
-            </td>
+            <td class="content"> <input type="password" name="password" id="pass"/> </td>
             <td id="password" class="warning"></td>
         </tr>
         <tr>
@@ -230,39 +293,37 @@
         </tr>
         <tr>
             <td class="td-left">确认密码</td>
-            <td class="content"><input type="password" class="text" maxlength="8"/></td>
+            <td class="content"><input type="password" name="rpass" class="text"/></td>
             <td id="Rpassword" class="warning"></td>
         </tr>
         <tr>
             <td class="td-left">姓名</td>
             <td class="content">
-                <input type="text" name="fullName" class="text"/>
+                <input type="text" name="fullName" id="fullName" class="text"/>
             </td>
-            <td id="LastName" class="warning">&nbsp;</td>
+            <td id="Full" class="warning">&nbsp;</td>
         </tr>
         <tr>
-            <td class="td-left">E-mail</td>
+            <td class="td-left">邮箱</td>
             <td class="content">
-                <input type="email" id="email" name="email" class="text"/>
-                <button onclick="senfEmail()" value="获取验证码">获取验证码</button>
+                <input type="email" name="email" id="email" class="text" th:placeholder="请输入邮箱"/>
+                <input type="button" onclick="sendEmail()" value="获取验证码"/>
             </td>
-            <td id="E-mail" class="warning">
-
-            </td>
+            <td id="Ema" class="warning">&nbsp;</td>
         </tr>
         <tr>
             <td class="td-left">手机号</td>
             <td class="content">
-                <input type="text" name="tel" class="text"/>
+                <input type="text" name="tel" id="tel" class="text"/>
             </td>
-            <td id="FirstName" class="warning">&nbsp;</td>
+            <td id="Phone" class="warning">&nbsp;</td>
         </tr>
         <tr>
             <td class="td-left">住址</td>
             <td class="content">
-                <input type="text" name="address" class="text"/>
+                <input type="text" name="address" id="address" class="text"/>
             </td>
-            <td id="address" class="warning">&nbsp;</td>
+            <td id="Addr" class="warning">&nbsp;</td>
         </tr>
         <tr>
             <td>密保问题</td>
@@ -284,7 +345,7 @@
         <tr>
             <td>验证码</td>
             <td class="content">
-                <input type="text" id="inputCode" onblur="validateCode()" />
+                <input type="text" id="inputCode" name="inputCode"/>
             </td>
         </tr>
         <tr>
@@ -305,10 +366,19 @@
         </tr>
     </table>
 </form>
+<script type="text/javascript">
+    function sendEmail(){
+        $.ajax({
+            url:"http://localhost:8080/user/sendEmail",
+            type: "GET",
+            data:{"email":$("#email").val()}
+        });
+    }
+</script>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 <!-- Icons -->
@@ -318,35 +388,6 @@
 </script>
 <!-- Graphs -->
 <script type="text/javascript" th:src="@{/js/Chart.min.js}"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 </body>
 <script type="text/javascript">
     var dataList = ["0","1"];
@@ -359,7 +400,6 @@
             console.log("fail");
         }
     };
-    SliderBar("slideBar", options);
 </script>
 <script type="text/javascript">
     function PasswordStrength(passwordID,strengthID){

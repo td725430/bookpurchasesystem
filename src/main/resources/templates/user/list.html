@@ -63,31 +63,31 @@
 							</tr>
 							</thead>
 							<tbody>
-							<form th:action="@{/user/addCart}" method="post">
 								<tr th:each="book:${books}">
-									<td>
-										<input type="hidden" name="bookId" th:value="${book.getId()}">
-									</td>
-									<td>
-										<input name="name" th:value="${book.getName()}" readonly>
-									</td>
-									<td>
-										<input name="price" th:value="${book.getPrice()}" readonly>
-									</td>
-									<td>
-										<input name="stock" th:value="${book.getNum()}" readonly>
-									</td>
-									<td>
-										<input name="author" th:value="${book.getAuthor()}" readonly>
-									</td>
-									<td>
-										<input type="number" name="num" min="1" value="1"/>
-									</td>
-									<td>
-										<input type="submit" value="加入购物车"/>
-									</td>
+									<form th:action="@{/user/addCart}" method="post">
+										<td>
+											<input type="hidden" name="bookId" th:value="${book.getId()}">
+										</td>
+										<td>
+											<input name="name" th:value="${book.getName()}" readonly>
+										</td>
+										<td>
+											<input name="price" th:value="${book.getPrice()}" readonly>
+										</td>
+										<td>
+											<input name="stock" th:value="${book.getNum()}" readonly>
+										</td>
+										<td>
+											<input name="author" th:value="${book.getAuthor()}" readonly>
+										</td>
+										<td>
+											<input type="number" name="num" min="1" value="1"/>
+										</td>
+										<td>
+											<input type="submit" value="加入购物车"/>
+										</td>
+									</form>
 								</tr>
-							</form>
 							<tr>
 								<td colspan="8">
 									<div class="pagelist">

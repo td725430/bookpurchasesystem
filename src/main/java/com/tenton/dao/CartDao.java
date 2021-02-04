@@ -31,4 +31,6 @@ public interface CartDao extends JpaRepository<Cart,Integer>, JpaSpecificationEx
      */
     @Query(value = "select * from Cart where user_id = ?1",nativeQuery = true)
     List<Cart> findAllByUserId(Integer userId);
+    @Query(value="from Cart where userId = ?1 and bookId = ?2")
+    Cart findCartByUserIdAndBookId(Integer userId,Integer bookId);
 }

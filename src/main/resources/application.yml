@@ -32,7 +32,7 @@ spring:
     #发送邮件的账户
     username: 923004696@qq.com
     #相对应的授权码
-    password: uqzrmhcklyfsbfgi
+    password: 000000000000
     test-connection: true
     properties:
       mail:
@@ -43,11 +43,12 @@ spring:
             required: true
   redis:
     #地址
-    host: 59.110.65.106
+    host: 00.00.00.00
     #端口
     port: 6379
+    password: 123456
   rabbitmq:
-    host: 59.110.65.106    #IP地址
+    host: 00.00.00.00    #IP地址
     port: 5672            #端口号
     username: guest
     password: guest

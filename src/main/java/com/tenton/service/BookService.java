@@ -1,8 +1,6 @@
 package com.tenton.service;
 
 import com.tenton.pojo.Book;
-import com.tenton.utils.PageResult;
-import com.tenton.utils.QueryPageBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
